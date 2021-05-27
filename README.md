@@ -31,14 +31,14 @@ Builder::macro('search', function ($attributes, string $searchTerm)
 
 ## Uses
 
-# Search One Coloum
+### Search One Coloum
 
 You can search in one coloum
 ```
 YourModel::search('coloum_name_where_you_want_to_search', 'string_to_search')->get();
 ```
 
-# Search Multiple Coloums
+### Search Multiple Coloums
 You can provide array to search in multiple coloums
 ```
 YourModel::search(['coloum_one', 'coloum_two', 'coloum_three'], 'string_to_search')->get();
