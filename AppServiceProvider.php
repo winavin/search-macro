@@ -25,25 +25,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Search Macro
-        Builder::macro('search', function ($attributes, string $searchTerm)
-        {
+        Builder::macro('search', function (string|array $attributes, string $searchTerm) {
             $searchTerm = str_replace(' ', '%', $searchTerm);
-            if (is_array($attributes))
-            {
-                $this->where(function (Builder $query) use ($attributes, $searchTerm)
-                {
-                    foreach ($attributes as $attribute)
-                    {
-                        $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
-                    }
-                });
-            } else
-            {
-                $this->where(function (Builder $query) use ($attributes, $searchTerm)
-                {
-                    $query->orWhere($attributes, 'LIKE', "%{$searchTerm}%");
-                });
-            }
+            $attributes = is_array($attributes) ? $attributes : [$attributes];
+
+            $this->where(function (Builder $query) use ($attributes, $searchTerm) {
+                foreach ($attributes as $attribute) {
+                    $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+                }
+            });
+
             return $this;
         });
     }
